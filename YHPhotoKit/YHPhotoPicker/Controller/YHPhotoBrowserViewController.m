@@ -273,9 +273,10 @@ static NSString *CellIdentifier = @"YHPhotoBrowserCollectionViewCell";
 
 - (void)selectButtonClick:(id)sender {
     UIButton *selectBtn = (UIButton *)sender;
-    if (_selectPhotoVCDelegate.selectPhotosCount >= 6 && !selectBtn.selected) {
+    int maxCount = _maxPhotosCount == 0 ? 6 : _maxPhotosCount;
+    if (_selectPhotoVCDelegate.selectPhotosCount >= maxCount && !selectBtn.selected) {
         if (_photoDelegate && [_photoDelegate respondsToSelector:@selector(selectedPhotoBeyondLimit:currentView:)]) {
-            [_photoDelegate selectedPhotoBeyondLimit:6 currentView:self.view];
+            [_photoDelegate selectedPhotoBeyondLimit:maxCount currentView:self.view];
         }
         return;
     }

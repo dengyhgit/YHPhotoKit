@@ -19,5 +19,6 @@
 @property (nonatomic, assign) NSIndexPath *currentIndex;
 @property (nonatomic, strong) id<YHPhotoPickerViewControllerDelegate> photoDelegate;
 @property (nonatomic, strong) YHSelectPhotoViewController *selectPhotoVCDelegate;
+@property(nonatomic, assign) int maxPhotosCount;
 
 @end

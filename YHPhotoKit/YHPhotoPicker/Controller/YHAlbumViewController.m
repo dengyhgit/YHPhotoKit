@@ -49,6 +49,8 @@
     YHSelectPhotoViewController *vc = [[YHSelectPhotoViewController alloc] init];
     YHAlbumModel *model = _albums.firstObject;
     vc.allFetchResult = model.albumFetchResult;
+    vc.pickerDelegate = self.pickerDelegate;
+    vc.maxPhotosCount = self.maxPhotosCount;
     [self.navigationController pushViewController:vc animated:NO];
 }
 
@@ -157,7 +159,7 @@
     } else {
         selectPhotoVC.photoCollection = model.albumCollection;
     }
-
+    selectPhotoVC.maxPhotosCount = self.maxPhotosCount;
     selectPhotoVC.pickerDelegate = self.pickerDelegate;
     [self.navigationController pushViewController:selectPhotoVC animated:YES];
 }

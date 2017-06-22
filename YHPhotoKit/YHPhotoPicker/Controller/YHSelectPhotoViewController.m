@@ -244,6 +244,7 @@ static NSString *kcellIdentifier = @"kYHSelectPhotosCell";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     YHPhotoBrowserViewController *photoBrowserVC = [[YHPhotoBrowserViewController alloc] init];
+    photoBrowserVC.maxPhotosCount = self.maxPhotosCount;
     photoBrowserVC.photoCollection = _photoCollection;
     photoBrowserVC.imageManager = _imageManager;
     photoBrowserVC.allFetchResult = _allFetchResult;
@@ -257,6 +258,7 @@ static NSString *kcellIdentifier = @"kYHSelectPhotosCell";
 #pragma mark click event
 - (void)browsedPhotos {
     YHPhotoBrowserViewController *photoBrowserVC = [[YHPhotoBrowserViewController alloc] init];
+    photoBrowserVC.maxPhotosCount = _maxPhotosCount;
     photoBrowserVC.photoCollection = _photoCollection;
     photoBrowserVC.imageManager = _imageManager;
     photoBrowserVC.allFetchResult = _allFetchResult;

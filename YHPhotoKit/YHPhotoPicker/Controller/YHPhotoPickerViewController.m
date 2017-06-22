@@ -19,6 +19,7 @@
     [super viewDidLoad];
     YHAlbumViewController *albumViewController = [[YHAlbumViewController alloc] init];
     albumViewController.pickerDelegate = self.pickerDelegate;
+    albumViewController.maxPhotosCount = self.maxPhotosCount;
     [self pushViewController:albumViewController animated:NO];
 }
 

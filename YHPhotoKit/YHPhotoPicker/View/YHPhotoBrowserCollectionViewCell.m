@@ -83,6 +83,7 @@
         _imageContent = [[UIScrollView alloc] initWithFrame:self.contentView.frame];
         _imageContent.userInteractionEnabled = YES;
         _imageContent.delegate = self;
+        _imageContent.contentMode = UIViewContentModeScaleAspectFill;
         _imageContent.maximumZoomScale = 2.0;
         _imageContent.minimumZoomScale = 1;
         _imageContent.decelerationRate = UIScrollViewDecelerationRateFast;

@@ -26,6 +26,7 @@
 @property(strong,nonatomic) PHFetchResult *allFetchResult;
 @property(strong, nonatomic) PHCollection *photoCollection;
 @property(assign, nonatomic) int selectPhotosCount;
+@property(nonatomic, assign) int maxPhotosCount;
 
 - (void)didSelectStatusChange:(YHPhotoModel *)model;
 - (void)finshToSelectPhoto:(YHPhotoModel *)model;

@@ -12,5 +12,6 @@
 @interface YHAlbumViewController : UIViewController
 
 @property(nullable, weak, nonatomic) id<YHPhotoPickerViewControllerDelegate> pickerDelegate;
+@property(nonatomic, assign) int maxPhotosCount;
 
 @end

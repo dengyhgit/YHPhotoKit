@@ -24,7 +24,6 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor blueColor];
         [self.contentView addSubview:self.thumbImage];
         [self.contentView addSubview:self.seletStatusButton];
     }
@@ -51,9 +50,10 @@
 
 - (void)selectedStatusChange:(id)sender {
     UIButton *selectBtn = (UIButton *)sender;
-    if (self.selectPhotoVC.selectPhotosCount >= 6 && !selectBtn.selected) {
+    int maxCount = self.selectPhotoVC.maxPhotosCount == 0 ? 6 : self.selectPhotoVC.maxPhotosCount;
+    if (self.selectPhotoVC.selectPhotosCount >= maxCount && !selectBtn.selected) {
         if (self.selectPhotoVC.pickerDelegate && [self.selectPhotoVC.pickerDelegate respondsToSelector:@selector(selectedPhotoBeyondLimit:currentView:)]) {
-            [self.selectPhotoVC.pickerDelegate selectedPhotoBeyondLimit:6 currentView:self.selectPhotoVC.view];
+            [self.selectPhotoVC.pickerDelegate selectedPhotoBeyondLimit:maxCount currentView:self.selectPhotoVC.view];
         }
         return;
     }
@@ -66,7 +66,8 @@
 - (UIImageView *)thumbImage {
     if (!_thumbImage) {
         _thumbImage = [[UIImageView alloc] initWithFrame:self.contentView.frame];
-        _thumbImage.contentMode = UIViewContentModeScaleToFill;
+        _thumbImage.contentMode = UIViewContentModeScaleAspectFill;
+        _thumbImage.clipsToBounds = YES;
     }
     return _thumbImage;
 }

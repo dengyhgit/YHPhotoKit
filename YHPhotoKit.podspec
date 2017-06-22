@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "YHPhotoKit"
-  s.version          = "0.1.0"
+  s.version          = "0.2.0"
   s.summary          = "A photo kit on iOS."
   s.description      = <<-DESC
                        It is a photo kit used on iOS, which implement by Objective-C.
