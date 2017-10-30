@@ -288,9 +288,12 @@ static NSString *CellIdentifier = @"YHPhotoBrowserCollectionViewCell";
 
 - (void)selectOriginButtonClick:(id)sender {
     UIButton *selectOriginImageBtn = sender;
-    YHPhotoModel *currentPhotoModel = self.allPhotoArr[[self currentIndex].item];
-    currentPhotoModel.isOriginPhoto = !currentPhotoModel.isOriginPhoto;
-    selectOriginImageBtn.selected = currentPhotoModel.isOriginPhoto;
+    selectOriginImageBtn.selected = !selectOriginImageBtn.selected;
+    for (int i = 0; i < self.allPhotoArr.count; i++) {
+        YHPhotoModel *currentPhotoModel = self.allPhotoArr[i];
+        currentPhotoModel.isOriginPhoto = self.selectOriginButton.selected;
+    }
+
     if (self.selectOriginButton.selected) {
         self.selectOriginButton.backgroundColor = YHPhotoKitColor(0xcc22c064);
     } else {
@@ -301,7 +304,9 @@ static NSString *CellIdentifier = @"YHPhotoBrowserCollectionViewCell";
 - (void)sendButtonClick {
     NSIndexPath *currentIndex = [self currentIndex];
     YHPhotoModel *currentPhotoModel = self.allPhotoArr[currentIndex.item];
-    currentPhotoModel.isSelected = YES;
+    if (!currentPhotoModel.isSelected) {
+        currentPhotoModel.isSelected = YES;
+    }
     [self.selectPhotoVCDelegate finshToSelectPhoto:currentPhotoModel];
 }
 

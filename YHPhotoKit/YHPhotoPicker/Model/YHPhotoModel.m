@@ -40,17 +40,25 @@
     _isSelected = isSelected;
     
     if (isSelected) {
-        CGSize originSize = CGSizeMake(_photoAsset.pixelHeight/2, _photoAsset.pixelWidth/2);
-        _largeImageSize = originSize;
-        PHImageRequestOptions *options = [[PHImageRequestOptions alloc]init];
-        options.synchronous  = YES;
-        [_cachingManager requestImageForAsset:_photoAsset
-                                   targetSize:[self fetchImageSizeWithOriginSize:originSize]
-                                  contentMode:PHImageContentModeAspectFill
-                                      options:options
-                                resultHandler:^(UIImage *result, NSDictionary *info) {
-                                    _largeImage = result;
-                                }];
+
+        CGSize originSize = CGSizeMake(_photoAsset.pixelHeight / UIScreen.mainScreen.scale, _photoAsset.pixelWidth / UIScreen.mainScreen.scale);
+        if (_isOriginPhoto) {
+            _largeImageSize = originSize;
+            [self loadOriginPhoto];
+        } else {
+//            _largeImageSize = CGSizeMake(originSize.width / 2, originSize.height / 2);
+            PHImageRequestOptions *options = [[PHImageRequestOptions alloc]init];
+            options.synchronous  = YES;
+            options.resizeMode = PHImageRequestOptionsResizeModeExact;
+            options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+            [_cachingManager requestImageForAsset:_photoAsset
+                                       targetSize:_largeImageSize
+                                      contentMode:PHImageContentModeDefault
+                                          options:options
+                                    resultHandler:^(UIImage *result, NSDictionary *info) {
+                                        _largeImage = result;
+                                    }];
+        }
        
     } else {
         _largeImage = nil;
@@ -61,19 +69,27 @@
     _isOriginPhoto = isOriginPhoto;
     
     if (_isSelected) {
-        CGSize originSize = CGSizeMake(_photoAsset.pixelWidth, _photoAsset.pixelHeight);
+        CGSize originSize = CGSizeMake(_photoAsset.pixelWidth / UIScreen.mainScreen.scale, _photoAsset.pixelHeight / UIScreen.mainScreen.scale);
         _largeImageSize = originSize;
-        PHImageRequestOptions *options = [[PHImageRequestOptions alloc]init];
-        options.synchronous  = YES;
-        [_cachingManager requestImageForAsset:_photoAsset
-                                   targetSize:[self fetchImageSizeWithOriginSize:originSize]
-                                  contentMode:PHImageContentModeDefault
-                                      options:options
-                                resultHandler:^(UIImage *result, NSDictionary *info) {
-                                    _largeImage = result;
-                                }];
+        [self loadOriginPhoto];
     }
+
 }
+
+- (void)loadOriginPhoto {
+    PHImageRequestOptions *options = [[PHImageRequestOptions alloc]init];
+    options.synchronous  = YES;
+    options.resizeMode = PHImageRequestOptionsResizeModeExact;
+    options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+    [_cachingManager requestImageForAsset:_photoAsset
+                               targetSize:_largeImageSize
+                              contentMode:PHImageContentModeDefault
+                                  options:options
+                            resultHandler:^(UIImage *result, NSDictionary *info) {
+                                _largeImage = result;
+                            }];
+}
+
 
 - (CGSize)fetchImageSizeWithOriginSize:(CGSize)originSize {
     CGFloat scale = originSize.width/originSize.height;
